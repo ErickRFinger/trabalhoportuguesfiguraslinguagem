@@ -1,0 +1,771 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Arena das Figuras de Linguagem - Duelo de Perguntas & Respostas</title>
+  <meta name="description" content="Jogo competitivo de perguntas e respostas sobre figuras de linguagem: Prosopopeia, Metonímia e Pleonasmo com modo árbitro, pontuação e estatísticas.">
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <!-- Canvas Confetti -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+  
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div id="app" class="app-container">
+    
+    <!-- Top Navigation Header -->
+    <header class="app-header">
+      <div class="header-content">
+        <div class="brand" id="btn-go-home">
+          <div class="brand-icon">
+            <i data-lucide="swords"></i>
+          </div>
+          <div class="brand-text">
+            <span class="brand-title">Arena das Figuras</span>
+            <span class="brand-subtitle">Prosopopeia • Metonímia • Pleonasmo</span>
+          </div>
+        </div>
+        
+        <nav class="header-nav">
+          <button id="nav-btn-home" class="nav-link active" title="Início">
+            <i data-lucide="home"></i>
+            <span>Início</span>
+          </button>
+          <button id="nav-btn-guide" class="nav-link" title="Guia Educativo">
+            <i data-lucide="book-open"></i>
+            <span>Estudar Figuras</span>
+          </button>
+          <button id="nav-btn-admin" class="nav-link" title="Painel do Administrador">
+            <i data-lucide="shield-alert"></i>
+            <span>Painel Admin</span>
+          </button>
+          <button id="btn-sound-toggle" class="btn-icon" title="Alternar Som">
+            <i data-lucide="volume-2" id="sound-icon"></i>
+          </button>
+        </nav>
+      </div>
+    </header>
+
+    <!-- Main Dynamic Content Container -->
+    <main class="main-content">
+      
+      <!-- SCREEN 1: HOME / WELCOME -->
+      <section id="screen-home" class="screen active">
+        <div class="hero-section">
+          <div class="hero-badge">
+            <i data-lucide="sparkles"></i> Duelo Educativo 1v1 em Tempo Real
+          </div>
+          <h1 class="hero-title">Desafie a Linguagem na <span class="gradient-text">Arena do Saber</span></h1>
+          <p class="hero-description">
+            Testem seus conhecimentos em <strong>Prosopopeia</strong>, <strong>Metonímia</strong> e <strong>Pleonasmo</strong> em partidas dinâmicas de 10 perguntas. Respostas ocultas, arbitragem em tempo real e relatórios de desempenho!
+          </p>
+
+          <div class="hero-actions">
+            <button id="btn-start-match-config" class="btn btn-primary btn-xl btn-pulse">
+              <i data-lucide="play-circle"></i>
+              <span>Iniciar Competição</span>
+            </button>
+            <button id="btn-explore-guide" class="btn btn-secondary btn-xl">
+              <i data-lucide="book-marked"></i>
+              <span>Revisar Conceitos</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Featured Figure Cards -->
+        <div class="features-grid">
+          <div class="feature-card feature-prosopopeia">
+            <div class="feature-icon">
+              <i data-lucide="ghost"></i>
+            </div>
+            <h3>Prosopopeia</h3>
+            <p>Atribuição de qualidades e sentimentos humanos a seres inanimados ou irracionais.</p>
+            <div class="feature-example">"O vento uivava segredos na noite."</div>
+          </div>
+
+          <div class="feature-card feature-metonimia">
+            <div class="feature-icon">
+              <i data-lucide="replace"></i>
+            </div>
+            <h3>Metonímia</h3>
+            <p>Substituição de uma palavra por outra devido à relação de proximidade de sentido.</p>
+            <div class="feature-example">"Li Machado de Assis no fim de semana."</div>
+          </div>
+
+          <div class="feature-card feature-pleonasmo">
+            <div class="feature-icon">
+              <i data-lucide="repeat"></i>
+            </div>
+            <h3>Pleonasmo</h3>
+            <p>Redundância intencional ou viciosa para reforçar a ideia da mensagem.</p>
+            <div class="feature-example">"Subir para cima" / "Sorriu um sorriso radiante"</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SCREEN 2: MATCH SETUP / CONFIG -->
+      <section id="screen-setup" class="screen">
+        <div class="card setup-card">
+          <div class="card-header">
+            <h2><i data-lucide="sliders"></i> Configuração da Partida</h2>
+            <p>Defina os participantes e as regras do duelo</p>
+          </div>
+
+          <form id="form-match-setup">
+            <div class="players-inputs-grid">
+              <!-- Player 1 Box -->
+              <div class="player-config-box player-1-box">
+                <div class="player-header">
+                  <span class="player-badge p1-badge">Participante 1</span>
+                  <i data-lucide="user-check" class="player-avatar-icon"></i>
+                </div>
+                <div class="form-group">
+                  <label for="p1-name">Nome do Jogador 1</label>
+                  <input type="text" id="p1-name" class="form-control" placeholder="Ex: Lucas" required maxlength="20" value="Participante 1">
+                </div>
+                <div class="player-color-picker">
+                  <span class="color-dot color-cyan"></span>
+                  <span class="color-title">Time Ciano</span>
+                </div>
+              </div>
+
+              <!-- VS Badge Divider -->
+              <div class="vs-divider">
+                <span>VS</span>
+              </div>
+
+              <!-- Player 2 Box -->
+              <div class="player-config-box player-2-box">
+                <div class="player-header">
+                  <span class="player-badge p2-badge">Participante 2</span>
+                  <i data-lucide="user-check" class="player-avatar-icon"></i>
+                </div>
+                <div class="form-group">
+                  <label for="p2-name">Nome do Jogador 2</label>
+                  <input type="text" id="p2-name" class="form-control" placeholder="Ex: Mariana" required maxlength="20" value="Participante 2">
+                </div>
+                <div class="player-color-picker">
+                  <span class="color-dot color-purple"></span>
+                  <span class="color-title">Time Púrpura</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="match-settings-grid">
+              <div class="form-group">
+                <label for="select-questions-count">
+                  <i data-lucide="help-circle"></i> Quantidade de Perguntas
+                </label>
+                <select id="select-questions-count" class="form-control">
+                  <option value="5">5 Perguntas (Partida Rápida)</option>
+                  <option value="10" selected>10 Perguntas (Padrão Oficial)</option>
+                  <option value="15">15 Perguntas (Duelo Longo)</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label for="select-timer-mode">
+                  <i data-lucide="timer"></i> Cronômetro por Pergunta
+                </label>
+                <select id="select-timer-mode" class="form-control">
+                  <option value="0">Desativado (Sem limite de tempo)</option>
+                  <option value="20" selected>20 Segundos por Pergunta</option>
+                  <option value="30">30 Segundos por Pergunta</option>
+                  <option value="45">45 Segundos por Pergunta</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label for="select-category-filter">
+                  <i data-lucide="layers"></i> Figuras na Partida
+                </label>
+                <select id="select-category-filter" class="form-control">
+                  <option value="ALL" selected>Todas (Prosopopeia, Metonímia, Pleonasmo)</option>
+                  <option value="Prosopopeia">Apenas Prosopopeia</option>
+                  <option value="Metonímia">Apenas Metonímia</option>
+                  <option value="Pleonasmo">Apenas Pleonasmo</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label for="select-grading-mode">
+                  <i data-lucide="gavel"></i> Modo de Correção
+                </label>
+                <select id="select-grading-mode" class="form-control">
+                  <option value="referee" selected>Modo Árbitro Presencial (Recomendado)</option>
+                  <option value="auto">Modo Automático Rápido</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="setup-actions">
+              <button type="button" id="btn-back-home" class="btn btn-secondary">
+                <i data-lucide="arrow-left"></i> Voltar
+              </button>
+              <button type="submit" class="btn btn-primary btn-lg">
+                <i data-lucide="zap"></i> Iniciar Duelo Agora
+              </button>
+            </div>
+          </form>
+        </div>
+      </section>
+
+      <!-- SCREEN 3: ACTIVE MATCH / QUESTION ARENA -->
+      <section id="screen-game" class="screen">
+        
+        <!-- Game Arena Header HUD -->
+        <div class="hud-container">
+          <div class="hud-scores">
+            <div class="hud-score-card p1-hud">
+              <div class="p1-avatar-mini"><i data-lucide="user"></i></div>
+              <div class="hud-player-info">
+                <span class="p1-display-name">Jogador 1</span>
+                <span class="p1-score-val" id="p1-current-score">0 pts</span>
+              </div>
+            </div>
+
+            <div class="hud-center-timer">
+              <div class="progress-ring-wrapper" id="timer-wrapper">
+                <span id="timer-seconds-display">20</span>
+                <span class="timer-unit">seg</span>
+              </div>
+              <div class="question-counter-badge" id="question-progress-label">Pergunta 1 / 10</div>
+            </div>
+
+            <div class="hud-score-card p2-hud">
+              <div class="hud-player-info align-right">
+                <span class="p2-display-name">Jogador 2</span>
+                <span class="p2-score-val" id="p2-current-score">0 pts</span>
+              </div>
+              <div class="p2-avatar-mini"><i data-lucide="user"></i></div>
+            </div>
+          </div>
+
+          <!-- Progress Bar Top -->
+          <div class="progress-bar-track">
+            <div class="progress-bar-fill" id="match-progress-bar" style="width: 10%;"></div>
+          </div>
+        </div>
+
+        <!-- Question Display Box -->
+        <div class="question-card">
+          <div class="question-header">
+            <span class="category-badge" id="q-category-tag">Prosopopeia</span>
+            <span class="question-type-badge" id="q-type-tag">Múltipla Escolha</span>
+          </div>
+
+          <h2 class="question-prompt" id="q-prompt-text">
+            "O sol sorriu para a cidade ao amanhecer." Qual figura de linguagem está presente nesta frase?
+          </h2>
+        </div>
+
+        <!-- PHASE 1: ANSWER INPUTS FOR P1 & P2 (PASS & PLAY / HIDDEN TAB) -->
+        <div id="phase-answering" class="game-phase active-phase">
+          <div class="answers-container-tabs">
+            
+            <!-- Player 1 Answering Panel -->
+            <div class="player-answer-panel" id="panel-p1">
+              <div class="panel-header p1-accent">
+                <i data-lucide="user"></i>
+                <span class="p1-display-name">Jogador 1</span>
+                <span class="status-indicator" id="p1-status-pill">Pendente</span>
+              </div>
+
+              <div class="panel-body" id="p1-input-area">
+                <!-- Content injected dynamically (Choices or Short Text) -->
+              </div>
+              <div class="panel-locked-overlay hidden" id="p1-locked-view">
+                <i data-lucide="check-circle-2"></i>
+                <p>Resposta Registrada!</p>
+                <small>Aguardando a resposta do Participante 2...</small>
+              </div>
+            </div>
+
+            <!-- Player 2 Answering Panel -->
+            <div class="player-answer-panel" id="panel-p2">
+              <div class="panel-header p2-accent">
+                <i data-lucide="user"></i>
+                <span class="p2-display-name">Jogador 2</span>
+                <span class="status-indicator" id="p2-status-pill">Pendente</span>
+              </div>
+
+              <div class="panel-body" id="p2-input-area">
+                <!-- Content injected dynamically -->
+              </div>
+              <div class="panel-locked-overlay hidden" id="p2-locked-view">
+                <i data-lucide="check-circle-2"></i>
+                <p>Resposta Registrada!</p>
+                <small>Ambos já responderam! Liberado para validação.</small>
+              </div>
+            </div>
+
+          </div>
+
+          <div class="game-footer-actions">
+            <button id="btn-reveal-referee" class="btn btn-warning btn-lg hidden" disabled>
+              <i data-lucide="eye"></i> Revelar e Avaliar Respostas
+            </button>
+          </div>
+        </div>
+
+        <!-- PHASE 2: REFEREE / ARBITRAGE & REVEAL STAGE -->
+        <div id="phase-referee" class="game-phase hidden-phase">
+          <div class="referee-banner">
+            <div class="referee-icon"><i data-lucide="gavel"></i></div>
+            <div>
+              <h3>Painel de Avaliação & Arbitragem</h3>
+              <p>Confirme a resposta correta oficial e atribua a pontuação justa aos participantes.</p>
+            </div>
+          </div>
+
+          <!-- Official Answer Reference -->
+          <div class="official-answer-box">
+            <div class="official-title">
+              <i data-lucide="check-check"></i> Resposta Oficial Registrada no Gabarito:
+            </div>
+            <div class="official-text" id="referee-official-answer-text">
+              Prosopopeia (Atribuição de ações humanas como "sorriu" ao Sol).
+            </div>
+            <div class="official-explanation" id="referee-explanation-text">
+              <strong>Explicação:</strong> Atribuir ações humanas a um elemento da natureza é Prosopopeia ou Personificação.
+            </div>
+          </div>
+
+          <!-- Comparison Grid -->
+          <div class="referee-comparison-grid">
+            
+            <!-- P1 Reveal & Judge Box -->
+            <div class="judge-box p1-judge-box">
+              <div class="judge-box-header">
+                <span class="p1-display-name">Jogador 1</span>
+              </div>
+              <div class="given-answer-display" id="ref-p1-answer">
+                "Prosopopeia"
+              </div>
+              <div class="judge-buttons">
+                <button type="button" class="btn btn-judge btn-judge-correct" id="btn-p1-mark-correct">
+                  <i data-lucide="check"></i> Correto (+1 Ponto)
+                </button>
+                <button type="button" class="btn btn-judge btn-judge-wrong" id="btn-p1-mark-wrong">
+                  <i data-lucide="x"></i> Errado (0 Pontos)
+                </button>
+              </div>
+              <div class="judge-status-badge" id="p1-judged-badge">Decisão: Aguardando...</div>
+            </div>
+
+            <!-- P2 Reveal & Judge Box -->
+            <div class="judge-box p2-judge-box">
+              <div class="judge-box-header">
+                <span class="p2-display-name">Jogador 2</span>
+              </div>
+              <div class="given-answer-display" id="ref-p2-answer">
+                "Metonímia"
+              </div>
+              <div class="judge-buttons">
+                <button type="button" class="btn btn-judge btn-judge-correct" id="btn-p2-mark-correct">
+                  <i data-lucide="check"></i> Correto (+1 Ponto)
+                </button>
+                <button type="button" class="btn btn-judge btn-judge-wrong" id="btn-p2-mark-wrong">
+                  <i data-lucide="x"></i> Errado (0 Pontos)
+                </button>
+              </div>
+              <div class="judge-status-badge" id="p2-judged-badge">Decisão: Aguardando...</div>
+            </div>
+
+          </div>
+
+          <div class="referee-footer">
+            <button id="btn-confirm-next-question" class="btn btn-primary btn-lg" disabled>
+              <span>Avançar para Próxima Pergunta</span>
+              <i data-lucide="arrow-right"></i>
+            </button>
+          </div>
+        </div>
+
+      </section>
+
+      <!-- SCREEN 4: VICTORY & RESULTS SUMMARY -->
+      <section id="screen-results" class="screen">
+        <div class="victory-container">
+          
+          <!-- Podium Banner -->
+          <div class="podium-card">
+            <div class="winner-trophy-icon">
+              <i data-lucide="trophy"></i>
+            </div>
+            <h1 class="winner-title" id="winner-announcement-title">🏆 Lucas Venceu o Duelo!</h1>
+            <p class="winner-subtitle" id="winner-announcement-sub">Excelente desempenho no domínio das figuras de linguagem!</p>
+          </div>
+
+          <!-- Comparison Score Board -->
+          <div class="final-stats-grid">
+            
+            <!-- Player 1 Card Stats -->
+            <div class="player-stat-card p1-stat-card" id="p1-final-card">
+              <div class="stat-player-header">
+                <span class="p1-display-name">Jogador 1</span>
+                <span class="rank-tag" id="p1-rank-tag">Campeão 🥇</span>
+              </div>
+              <div class="big-score" id="p1-final-score-val">8 / 10</div>
+              <div class="stat-details">
+                <div class="stat-row">
+                  <span>Acertos:</span>
+                  <strong id="p1-hits-val" class="text-success">8</strong>
+                </div>
+                <div class="stat-row">
+                  <span>Erros:</span>
+                  <strong id="p1-misses-val" class="text-danger">2</strong>
+                </div>
+                <div class="stat-row">
+                  <span>Aproveitamento:</span>
+                  <strong id="p1-pct-val">80%</strong>
+                </div>
+              </div>
+              <div class="progress-bar-track">
+                <div class="progress-bar-fill p1-fill" id="p1-pct-bar" style="width: 80%;"></div>
+              </div>
+            </div>
+
+            <!-- Player 2 Card Stats -->
+            <div class="player-stat-card p2-stat-card" id="p2-final-card">
+              <div class="stat-player-header">
+                <span class="p2-display-name">Jogador 2</span>
+                <span class="rank-tag" id="p2-rank-tag">2º Lugar 🥈</span>
+              </div>
+              <div class="big-score" id="p2-final-score-val">6 / 10</div>
+              <div class="stat-details">
+                <div class="stat-row">
+                  <span>Acertos:</span>
+                  <strong id="p2-hits-val" class="text-success">6</strong>
+                </div>
+                <div class="stat-row">
+                  <span>Erros:</span>
+                  <strong id="p2-misses-val" class="text-danger">4</strong>
+                </div>
+                <div class="stat-row">
+                  <span>Aproveitamento:</span>
+                  <strong id="p2-pct-val">60%</strong>
+                </div>
+              </div>
+              <div class="progress-bar-track">
+                <div class="progress-bar-fill p2-fill" id="p2-pct-bar" style="width: 60%;"></div>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Tie Breaker Sudden Death Prompt (If tied) -->
+          <div class="tie-breaker-card hidden" id="tie-breaker-box">
+            <div class="tie-icon"><i data-lucide="scale"></i></div>
+            <h3>Empate Técnico!</h3>
+            <p>Deseja realizar uma rodada de <strong>Desempate (Sudden Death)</strong> com uma pergunta bônus?</p>
+            <button id="btn-trigger-tie-breaker" class="btn btn-warning btn-lg">
+              <i data-lucide="flame"></i> Jogar Pergunta de Desempate
+            </button>
+          </div>
+
+          <!-- Question-by-Question Review Breakdown -->
+          <div class="card match-review-card">
+            <div class="card-header">
+              <h3><i data-lucide="list-checks"></i> Detalhamento Rodada a Rodada</h3>
+            </div>
+            <div class="review-table-container">
+              <table class="review-table">
+                <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>Figura</th>
+                    <th>Pergunta</th>
+                    <th><span class="p1-display-name">J1</span></th>
+                    <th><span class="p2-display-name">J2</span></th>
+                  </tr>
+                </thead>
+                <tbody id="match-review-tbody">
+                  <!-- Dynamic rows -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- Action Buttons -->
+          <div class="results-actions">
+            <button id="btn-rematch" class="btn btn-primary btn-lg">
+              <i data-lucide="rotate-ccw"></i> Jogar Novamente
+            </button>
+            <button id="btn-results-to-admin" class="btn btn-secondary btn-lg">
+              <i data-lucide="shield-check"></i> Salvar & Ver no Painel Admin
+            </button>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- SCREEN 5: EDUCATIONAL GUIDE -->
+      <section id="screen-guide" class="screen">
+        <div class="guide-container">
+          <div class="page-title-box">
+            <h1><i data-lucide="book-open"></i> Guia Completo de Figuras de Linguagem</h1>
+            <p>Aprenda os conceitos, exemplos práticos e macetes para gabaritar o duelo!</p>
+          </div>
+
+          <div class="guide-cards-list">
+            
+            <article class="guide-article" id="guide-prosopopeia">
+              <div class="guide-header">
+                <div class="guide-badge badge-prosopopeia">1. Prosopopeia (ou Personificação)</div>
+              </div>
+              <div class="guide-body">
+                <p><strong>Definição:</strong> É a figura de linguagem que atribui ações, sentimentos, pensamentos ou qualidades humanas a seres inanimados, objetos, animais ou conceitos abstratos.</p>
+                
+                <div class="guide-examples-box">
+                  <h4>Exemplos Clássicos:</h4>
+                  <ul>
+                    <li><em>"O vento <strong>uivava</strong> de raiva durante a tempestade."</em> (Uivar de raiva é uma atitude humana/animal atribuída ao vento).</li>
+                    <li><em>"A lua <strong>abraçou</strong> a cidade escura com sua luz."</em></li>
+                    <li><em>"As paredes daquela casa <strong>têm ouvidos</strong>."</em></li>
+                  </ul>
+                </div>
+                <div class="guide-tip">
+                  <i data-lucide="lightbulb"></i> <strong>Dica de Ouro:</strong> Se algo inanimado está sentindo, falando ou agindo como pessoa, é <strong>Prosopopeia</strong>!
+                </div>
+              </div>
+            </article>
+
+            <article class="guide-article" id="guide-metonimia">
+              <div class="guide-header">
+                <div class="guide-badge badge-metonimia">2. Metonímia</div>
+              </div>
+              <div class="guide-body">
+                <p><strong>Definição:</strong> Ocorre quando se substitui um termo por outro com base em uma relação lógica de proximidade ou dependência de sentido.</p>
+                
+                <div class="guide-examples-box">
+                  <h4>Tipos Mais Comuns de Metonímia:</h4>
+                  <ul>
+                    <li><strong>Autor pela Obra:</strong> <em>"Estou lendo <strong>Machado de Assis</strong>."</em> (Lendo o livro do autor).</li>
+                    <li><strong>Continente pelo Conteúdo:</strong> <em>"Bebi dois <strong>copos</strong> de água."</em> (Bebi a água contida nos copos).</li>
+                    <li><strong>Marca pelo Produto:</strong> <em>"Comprei <strong>Gillette</strong> e <strong>Bombril</strong>."</em> (Lâmina de barbear e palha de aço).</li>
+                    <li><strong>Parte pelo Todo:</strong> <em>"Ele tem muitas <strong>cabeças de gado</strong> na fazenda."</em></li>
+                  </ul>
+                </div>
+                <div class="guide-tip">
+                  <i data-lucide="lightbulb"></i> <strong>Dica de Ouro:</strong> Há sempre uma troca lógica entre o recipiente/conteúdo, criador/criatura, parte/todo.
+                </div>
+              </div>
+            </article>
+
+            <article class="guide-article" id="guide-pleonasmo">
+              <div class="guide-header">
+                <div class="guide-badge badge-pleonasmo">3. Pleonasmo</div>
+              </div>
+              <div class="guide-body">
+                <p><strong>Definição:</strong> É a repetição da mesma ideia por meio de palavras diferentes para reforçar o significado ou enfatizar uma mensagem.</p>
+                
+                <div class="guide-examples-box">
+                  <h4>Classificação:</h4>
+                  <ul>
+                    <li><strong>Pleonasmo Literário (ou Estilístico):</strong> Usado em poesia e literatura para dar expressividade. Ex.: <em>"Sorriu um <strong>sorriso radiante</strong>"</em> / <em>"Chorar <strong>lágrimas amargas</strong>"</em>.</li>
+                    <li><strong>Pleonasmo Vicioso (Erro gramatical):</strong> Redundância desnecessária do cotidiano. Ex.: <em>"Subir <strong>para cima</strong>"</em> / <em>"Entrar <strong>para dentro</strong>"</em> / <em>"Hábito <strong>antigo</strong>"</em> / <em>"Certeza <strong>absoluta</strong>"</em>.</li>
+                  </ul>
+                </div>
+                <div class="guide-tip">
+                  <i data-lucide="lightbulb"></i> <strong>Dica de Ouro:</strong> O pleonasmo enfatiza a mesma ideia duas vezes. Na poesia é recurso estilístico; no dia a dia é vício de linguagem.
+                </div>
+              </div>
+            </article>
+
+          </div>
+        </div>
+      </section>
+
+      <!-- SCREEN 6: ADMIN PANEL & QUESTION DATABASE MANAGEMENT -->
+      <section id="screen-admin" class="screen">
+        <div class="admin-container">
+          
+          <div class="admin-header-bar">
+            <div>
+              <h1><i data-lucide="shield-alert"></i> Painel do Administrador</h1>
+              <p>Gerencie perguntas, modifique o banco de dados e consulte o histórico de partidas.</p>
+            </div>
+            
+            <div class="admin-top-actions">
+              <button id="btn-open-add-modal" class="btn btn-primary">
+                <i data-lucide="plus-circle"></i> Nova Pergunta
+              </button>
+              <button id="btn-reset-db" class="btn btn-danger-outline" title="Restaurar Banco Padrão">
+                <i data-lucide="refresh-cw"></i> Resetar BD
+              </button>
+            </div>
+          </div>
+
+          <!-- Admin Tabs -->
+          <div class="admin-tabs">
+            <button class="admin-tab-btn active" data-tab="tab-questions">
+              <i data-lucide="database"></i> Banco de Perguntas (<span id="total-q-count">0</span>)
+            </button>
+            <button class="admin-tab-btn" data-tab="tab-history">
+              <i data-lucide="history"></i> Histórico de Partidas
+            </button>
+          </div>
+
+          <!-- TAB 1: QUESTION BANK MANAGEMENT -->
+          <div id="tab-questions" class="admin-tab-content active-tab">
+            <div class="table-filters-bar">
+              <div class="search-box">
+                <i data-lucide="search"></i>
+                <input type="text" id="admin-search-input" placeholder="Buscar pergunta por palavra-chave..." class="form-control">
+              </div>
+
+              <div class="filter-box">
+                <select id="admin-filter-category" class="form-control">
+                  <option value="ALL">Todas as Categorias</option>
+                  <option value="Prosopopeia">Prosopopeia</option>
+                  <option value="Metonímia">Metonímia</option>
+                  <option value="Pleonasmo">Pleonasmo</option>
+                </select>
+              </div>
+
+              <div class="filter-box">
+                <select id="admin-filter-type" class="form-control">
+                  <option value="ALL">Todos os Tipos</option>
+                  <option value="choice">Múltipla Escolha</option>
+                  <option value="direct">Resposta Direta</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="admin-table-container">
+              <table class="admin-table">
+                <thead>
+                  <tr>
+                    <th>ID</th>
+                    <th>Categoria</th>
+                    <th>Tipo</th>
+                    <th>Enunciado da Pergunta</th>
+                    <th>Resposta Correta</th>
+                    <th>Ações</th>
+                  </tr>
+                </thead>
+                <tbody id="admin-questions-tbody">
+                  <!-- Dynamic rows -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- TAB 2: MATCH HISTORY -->
+          <div id="tab-history" class="admin-tab-content">
+            <div class="history-actions-bar">
+              <h3>Histórico de Partidas Realizadas</h3>
+              <button id="btn-clear-history" class="btn btn-secondary btn-sm">
+                <i data-lucide="trash-2"></i> Limpar Histórico
+              </button>
+            </div>
+            
+            <div id="history-cards-list" class="history-grid">
+              <!-- History items generated dynamically -->
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="app-footer">
+      <div class="footer-content">
+        <p>Arena das Figuras de Linguagem &copy; 2026 • Ferramenta Educativa de Língua Portuguesa</p>
+      </div>
+    </footer>
+
+  </div>
+
+  <!-- MODAL: ADD / EDIT QUESTION -->
+  <div class="modal-overlay hidden" id="modal-question">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3 id="modal-q-title"><i data-lucide="plus-circle"></i> Cadastrar Nova Pergunta</h3>
+        <button class="btn-close-modal" id="btn-close-q-modal">&times;</button>
+      </div>
+
+      <form id="form-question-crud">
+        <input type="hidden" id="edit-q-id">
+
+        <div class="form-row-2">
+          <div class="form-group">
+            <label for="modal-q-category">Figura de Linguagem (Categoria)</label>
+            <select id="modal-q-category" class="form-control" required>
+              <option value="Prosopopeia">Prosopopeia</option>
+              <option value="Metonímia">Metonímia</option>
+              <option value="Pleonasmo">Pleonasmo</option>
+              <option value="Metáfora">Metáfora (Extra)</option>
+              <option value="Ironia">Ironia (Extra)</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="modal-q-type">Tipo de Pergunta</label>
+            <select id="modal-q-type" class="form-control" required>
+              <option value="choice">Múltipla Escolha (4 Opções)</option>
+              <option value="direct">Resposta Direta / Curta</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="modal-q-prompt">Enunciado da Pergunta</label>
+          <textarea id="modal-q-prompt" class="form-control" rows="3" placeholder="Digite a pergunta ou frase para análise..." required></textarea>
+        </div>
+
+        <!-- Multiple Choice Options Group -->
+        <div id="modal-choice-options-group">
+          <div class="options-grid-inputs">
+            <div class="form-group">
+              <label for="opt-a">Opção A</label>
+              <input type="text" id="opt-a" class="form-control" placeholder="Opção A">
+            </div>
+            <div class="form-group">
+              <label for="opt-b">Opção B</label>
+              <input type="text" id="opt-b" class="form-control" placeholder="Opção B">
+            </div>
+            <div class="form-group">
+              <label for="opt-c">Opção C</label>
+              <input type="text" id="opt-c" class="form-control" placeholder="Opção C">
+            </div>
+            <div class="form-group">
+              <label for="opt-d">Opção D</label>
+              <input type="text" id="opt-d" class="form-control" placeholder="Opção D">
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="modal-q-correct">Resposta Correta Exata / Gabarito Oficial</label>
+          <input type="text" id="modal-q-correct" class="form-control" placeholder="Ex: Prosopopeia ou texto exato da resposta" required>
+        </div>
+
+        <div class="form-group">
+          <label for="modal-q-explanation">Explicação / Comentário Educativo</label>
+          <textarea id="modal-q-explanation" class="form-control" rows="2" placeholder="Explicação detalhada para o árbitro e participantes..."></textarea>
+        </div>
+
+        <div class="modal-actions">
+          <button type="button" class="btn btn-secondary" id="btn-cancel-q-modal">Cancelar</button>
+          <button type="submit" class="btn btn-primary">Salvar Pergunta</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script type="module" src="src/js/app.js"></script>
+</body>
+</html>
