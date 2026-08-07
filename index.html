@@ -129,7 +129,16 @@
                 </div>
                 <div class="form-group">
                   <label for="p1-name">Nome do Jogador 1</label>
-                  <input type="text" id="p1-name" class="form-control" placeholder="Ex: Lucas" required maxlength="20" value="Participante 1">
+                  <input type="text" id="p1-name" class="form-control" list="participants-list" placeholder="Selecione ou digite o nome..." required maxlength="50" value="Lucas Colombo Brittes">
+                </div>
+                <div class="quick-names-box">
+                  <span class="quick-names-label">Selecionar participante:</span>
+                  <div class="quick-names-pills" id="p1-quick-chips">
+                    <button type="button" class="name-chip active" data-target="p1" data-name="Lucas Colombo Brittes">Lucas Colombo</button>
+                    <button type="button" class="name-chip" data-target="p1" data-name="Vitor Depra">Vitor Depra</button>
+                    <button type="button" class="name-chip" data-target="p1" data-name="Guilherme Seibel">Guilherme Seibel</button>
+                    <button type="button" class="name-chip" data-target="p1" data-name="Lucas Gabriel Vieira Teleken">Lucas Gabriel</button>
+                  </div>
                 </div>
                 <div class="player-color-picker">
                   <span class="color-dot color-cyan"></span>
@@ -150,13 +159,30 @@
                 </div>
                 <div class="form-group">
                   <label for="p2-name">Nome do Jogador 2</label>
-                  <input type="text" id="p2-name" class="form-control" placeholder="Ex: Mariana" required maxlength="20" value="Participante 2">
+                  <input type="text" id="p2-name" class="form-control" list="participants-list" placeholder="Selecione ou digite o nome..." required maxlength="50" value="Vitor Depra">
+                </div>
+                <div class="quick-names-box">
+                  <span class="quick-names-label">Selecionar participante:</span>
+                  <div class="quick-names-pills" id="p2-quick-chips">
+                    <button type="button" class="name-chip" data-target="p2" data-name="Lucas Colombo Brittes">Lucas Colombo</button>
+                    <button type="button" class="name-chip active" data-target="p2" data-name="Vitor Depra">Vitor Depra</button>
+                    <button type="button" class="name-chip" data-target="p2" data-name="Guilherme Seibel">Guilherme Seibel</button>
+                    <button type="button" class="name-chip" data-target="p2" data-name="Lucas Gabriel Vieira Teleken">Lucas Gabriel</button>
+                  </div>
                 </div>
                 <div class="player-color-picker">
                   <span class="color-dot color-purple"></span>
                   <span class="color-title">Time Púrpura</span>
                 </div>
               </div>
+
+              <!-- Datalist para autocompletar nomes -->
+              <datalist id="participants-list">
+                <option value="Lucas Colombo Brittes"></option>
+                <option value="Vitor Depra"></option>
+                <option value="Guilherme Seibel"></option>
+                <option value="Lucas Gabriel Vieira Teleken"></option>
+              </datalist>
             </div>
 
             <div class="match-settings-grid">

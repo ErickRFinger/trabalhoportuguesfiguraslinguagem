@@ -6,8 +6,8 @@ import { Sound } from './sound.js';
 
 export class MatchEngine {
   constructor(config = {}) {
-    this.player1 = config.player1 || "Participante 1";
-    this.player2 = config.player2 || "Participante 2";
+    this.player1 = config.player1 || "Lucas Colombo Brittes";
+    this.player2 = config.player2 || "Vitor Depra";
     this.totalQuestionsCount = parseInt(config.questionsCount || 10, 10);
     this.timerDuration = parseInt(config.timerDuration || 20, 10);
     this.categoryFilter = config.categoryFilter || "ALL";

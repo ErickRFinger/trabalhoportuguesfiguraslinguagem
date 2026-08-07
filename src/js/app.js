@@ -121,11 +121,32 @@ class App {
     const setupForm = document.getElementById('form-match-setup');
     if (!setupForm) return;
 
+    // Quick name chips click handlers
+    const nameChips = document.querySelectorAll('.name-chip');
+    nameChips.forEach(chip => {
+      chip.addEventListener('click', () => {
+        Sound.playClick();
+        const targetInputId = chip.getAttribute('data-target') === 'p1' ? 'p1-name' : 'p2-name';
+        const nameVal = chip.getAttribute('data-name');
+        const inputEl = document.getElementById(targetInputId);
+        if (inputEl) {
+          inputEl.value = nameVal;
+        }
+
+        // Highlight active chip for that player group
+        const container = chip.closest('.quick-names-pills');
+        if (container) {
+          container.querySelectorAll('.name-chip').forEach(c => c.classList.remove('active'));
+          chip.classList.add('active');
+        }
+      });
+    });
+
     setupForm.addEventListener('submit', (e) => {
       e.preventDefault();
 
-      const player1Name = document.getElementById('p1-name').value.trim() || "Participante 1";
-      const player2Name = document.getElementById('p2-name').value.trim() || "Participante 2";
+      const player1Name = document.getElementById('p1-name').value.trim() || "Lucas Colombo Brittes";
+      const player2Name = document.getElementById('p2-name').value.trim() || "Vitor Depra";
       const questionsCount = document.getElementById('select-questions-count').value;
       const timerDuration = document.getElementById('select-timer-mode').value;
       const categoryFilter = document.getElementById('select-category-filter').value;
